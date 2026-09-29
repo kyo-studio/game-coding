@@ -103,6 +103,33 @@ body {
   color: var(--text-muted);
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.portal-back-link {
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.portal-back-link:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: #fff;
+  transform: translateY(-1px);
+}
+
 .icon-btn {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border-color);
