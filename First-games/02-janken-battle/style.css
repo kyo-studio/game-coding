@@ -1,0 +1,392 @@
+/* ========================================================
+   02 じゃんけんバトル スタイルシート
+   ======================================================== */
+
+/* 基本設定・リセット */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+  color: #334155;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ヘッダー */
+.game-header {
+  text-align: center;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.back-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #60a5fa;
+}
+
+.game-badge {
+  display: inline-block;
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.game-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(90deg, #c084fc, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* メインカード */
+.game-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 連勝バナー */
+.streak-banner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 10px 16px;
+}
+
+.streak-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.streak-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.streak-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #6366f1;
+}
+
+.streak-value.gold {
+  color: #d97706;
+}
+
+.streak-divider {
+  width: 1px;
+  height: 32px;
+  background: #cbd5e1;
+}
+
+/* バトルアリーナ */
+.arena-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f5f9;
+  border-radius: 18px;
+  padding: 20px 16px;
+}
+
+.fighter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 110px;
+}
+
+.fighter-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.player-box .fighter-tag {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.cpu-box .fighter-tag {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.hand-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.hand-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+/* 手のシェイクアニメーション（対決中） */
+.shaking-player {
+  animation: shakePlayer 0.5s infinite;
+}
+
+.shaking-cpu {
+  animation: shakeCpu 0.5s infinite;
+}
+
+@keyframes shakePlayer {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(-10deg); }
+}
+
+@keyframes shakeCpu {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(10deg); }
+}
+
+/* VS ボックス */
+.vs-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.vs-text {
+  font-size: 1.4rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #94a3b8;
+}
+
+.phase-message {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6366f1;
+  text-align: center;
+  min-height: 1.2em;
+}
+
+/* 結果バナー */
+.result-banner {
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  animation: bannerPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.result-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+.result-detail {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.result-banner.win {
+  background: #ecfdf5;
+  color: #047857;
+  border: 2px solid #a7f3d0;
+}
+
+.result-banner.lose {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 2px solid #fecaca;
+}
+
+.result-banner.draw {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 2px solid #bfdbfe;
+}
+
+@keyframes bannerPop {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* 手の選択ボタン */
+.controls-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.controls-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.hand-btn {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.hand-btn .hand-icon {
+  font-size: 2rem;
+  transition: transform 0.15s ease;
+}
+
+.hand-btn .hand-btn-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.hand-btn:hover:not(:disabled) {
+  border-color: #6366f1;
+  background: #f5f3ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.hand-btn:hover:not(:disabled) .hand-icon {
+  transform: scale(1.15);
+}
+
+.hand-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.hand-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* スコアボード */
+.scoreboard-section {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 14px;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+}
+
+.score-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.score-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.score-card.win .score-num { color: #059669; }
+.score-card.lose .score-num { color: #dc2626; }
+.score-card.draw .score-num { color: #2563eb; }
+.score-card.rate .score-num { color: #7c3aed; }
+
+/* フッターアクション */
+.action-section {
+  text-align: center;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.btn-text:hover {
+  color: #ef4444;
+}

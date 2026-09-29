@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>07 ドット避けゲーム (Dodge the Dots)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <div class="header-top">
+        <a href="../index.html" class="back-link">← 一覧に戻る</a>
+        <span class="game-badge">Game #07</span>
+      </div>
+      <h1>ドット避けゲーム</h1>
+      <p class="subtitle">HTML5 Canvas 2D Survival</p>
+    </header>
+
+    <main class="arcade-card">
+      <!-- ヘッダーHUD（スコア・タイム・シールド・ベスト） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">スコア</span>
+          <strong id="score-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">生存時間</span>
+          <strong id="time-display" class="hud-value">0.0s</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">シールド</span>
+          <strong id="shield-display" class="hud-value shield-off">OFF</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト</span>
+          <strong id="best-score-display" class="hud-value gold">0</strong>
+        </div>
+      </section>
+
+      <!-- Canvasゲーム描画エリア -->
+      <div class="canvas-wrapper">
+        <canvas id="gameCanvas" width="500" height="500"></canvas>
+
+        <!-- スタートオーバーレイ -->
+        <div id="start-overlay" class="game-overlay">
+          <div class="overlay-content">
+            <div class="overlay-icon">🎮</div>
+            <h2>DODGE THE DOTS</h2>
+            <p class="overlay-desc">赤いドットを避けながら、星やシールドを集めて生き残れ！</p>
+            <div class="controls-guide">
+              <p>【操作方法】</p>
+              <p>⌨️ 矢印キー または W / A / S / D キー</p>
+              <p>🖱️ マウスドラッグ / タッチ追従</p>
+            </div>
+            <button id="start-btn" class="btn btn-primary">ゲームスタート ⚡</button>
+          </div>
+        </div>
+
+        <!-- ゲームオーバーオーバーレイ -->
+        <div id="gameover-overlay" class="game-overlay hidden">
+          <div class="overlay-content">
+            <div class="overlay-icon">💥</div>
+            <h2 class="gameover-title">GAME OVER</h2>
+            <div class="result-stats">
+              <p>最終スコア: <strong id="final-score">0</strong> 点</p>
+              <p>生存時間: <strong id="final-time">0.0</strong> 秒</p>
+              <p id="new-record-badge" class="new-record-badge hidden">✨ NEW HIGH SCORE! ✨</p>
+            </div>
+            <button id="restart-btn" class="btn btn-primary">もう一度挑戦 🔄</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>移動: <strong>[矢印]</strong> / <strong>[WASD]</strong> / <strong>[マウス/タッチ]</strong></span>
+        <span>一時停止: <strong>[P]</strong></span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+/* ========================================================
+   06 神経衰弱 (Memory Match) スタイルシート
+   ======================================================== */
+
+/* 基本設定・リセット */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  color: #334155;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  overscroll-behavior: none;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 500px;
+  touch-action: manipulation;
+}
+
+/* ヘッダー */
+.game-header {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.back-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #a855f7;
+}
+
+.game-badge {
+  display: inline-block;
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.game-header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #c084fc, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* メインカード */
+.game-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+
+/* 難易度切り替えタブ */
+.difficulty-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.diff-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.diff-btn:hover {
+  color: #1e293b;
+}
+
+.diff-btn.active {
+  background: #7c3aed;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
+}
+
+/* ステータスバー */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+/* 自己ベスト記録バー */
+.best-record-bar {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.best-record-bar span {
+  color: #d97706;
+}
+
+/* カードグリッドボード */
+.board-section {
+  width: 100%;
+  perspective: 1000px; /* 3D遠近感の設定 */
+}
+
+.card-grid {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* 難易度別のグリッドレイアウト */
+.card-grid.easy {
+  grid-template-columns: repeat(3, 1fr); /* 2行 × 3列 */
+}
+
+.card-grid.normal {
+  grid-template-columns: repeat(4, 1fr); /* 3行 × 4列 */
+}
+
+.card-grid.hard {
+  grid-template-columns: repeat(4, 1fr); /* 4行 × 4列 */
+  gap: 8px;
+}
+
+/* 3Dフリップカード本体 */
+.card {
+  aspect-ratio: 3 / 4;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+/* 表を向くアニメーション */
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* マッチ成立時の固定・輝き */
+.card.matched {
+  transform: rotateY(180deg) scale(0.95);
+  cursor: default;
+}
+
+.card.matched .card-front {
+  background: #ecfdf5;
+  border-color: #10b981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+/* カードの表裏共通 */
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden; /* 裏側を非表示にする重要プロパティ */
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* カードの裏面（伏せられている時） */
+.card-back {
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 900;
+  border: 2px solid #818cf8;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover:not(.flipped):not(.matched) .card-back {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* カードの表面（めくられた時） */
+.card-front {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  font-size: 2.2rem;
+  transform: rotateY(180deg);
+}
+
+.card-grid.hard .card-front {
+  font-size: 1.8rem;
+}
+
+/* アクションボタン */
+.btn {
+  cursor: pointer;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.btn-primary {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #6d28d9;
+  transform: translateY(-1px);
+}
+
+/* クリアモーダル */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 10;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-icon {
+  font-size: 3rem;
+}
+
+.modal-card h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.star-rating {
+  font-size: 2rem;
+  color: #cbd5e1;
+  display: flex;
+  gap: 4px;
+}
+
+.star-rating .star.active {
+  color: #f59e0b;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  animation: popIn 0.4s ease;
+}
+
+.clear-details {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.new-record-msg {
+  color: #d97706;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}

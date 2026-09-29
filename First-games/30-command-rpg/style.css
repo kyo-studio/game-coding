@@ -1,0 +1,547 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+:root {
+  --bg-dark: #0a0a1a;
+  --panel-bg: rgba(12, 20, 50, 0.92);
+  --panel-border: #4a75a0;
+  --panel-border-bright: #88c0d0;
+  --gold: #f4c430;
+  --hp-green: #2ecc71;
+  --hp-low: #e74c3c;
+  --mp-blue: #3498db;
+  --text-color: #ecf0f1;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+  background-color: var(--bg-dark);
+  font-family: 'DotGothic16', monospace, sans-serif;
+  color: var(--text-color);
+}
+
+#game-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  height: 100dvh;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #1a1e3a 0%, #080914 100%);
+  border-left: 2px solid #222d4a;
+  border-right: 2px solid #222d4a;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ヘッダー */
+#battle-header {
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background: rgba(8, 12, 30, 0.85);
+  border-bottom: 2px solid var(--panel-border);
+  z-index: 10;
+}
+
+.back-link {
+  color: var(--panel-border-bright);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+}
+.back-link:hover {
+  color: #fff;
+}
+
+#stage-badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* バトルフィールド（敵エリア） */
+#battlefield {
+  position: relative;
+  flex: 1.2;
+  min-height: 140px;
+  max-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(20, 24, 60, 0.4) 0%, rgba(10, 15, 35, 0.8) 100%);
+  overflow: hidden;
+  border-bottom: 2px solid var(--panel-border);
+}
+
+#enemies-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.enemy-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  position: relative;
+}
+
+.enemy-card.selected {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px var(--gold));
+}
+
+.enemy-card.selected::after {
+  content: '▼ TARGET';
+  position: absolute;
+  top: -20px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  animation: bounce 0.6s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
+}
+
+.enemy-sprite {
+  font-size: 46px;
+  line-height: 1;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  transition: transform 0.2s;
+}
+
+.boss-sprite {
+  font-size: 64px;
+}
+
+.enemy-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+  margin-bottom: 3px;
+}
+
+.enemy-hp-bar {
+  width: 70px;
+  height: 6px;
+  background: #2c3e50;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #111;
+}
+
+.enemy-hp-fill {
+  height: 100%;
+  background: var(--hp-green);
+  width: 100%;
+  transition: width 0.3s ease-out, background 0.3s;
+}
+
+/* 被ダメージアニメーション */
+.shake {
+  animation: shakeAnim 0.3s ease-in-out;
+}
+@keyframes shakeAnim {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px) rotate(-3deg); }
+  40% { transform: translateX(8px) rotate(3deg); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+/* メッセージログウィンドウ */
+#message-window {
+  min-height: 44px;
+  max-height: 52px;
+  flex-shrink: 0;
+  background: var(--panel-bg);
+  border-bottom: 2px solid var(--panel-border);
+  display: flex;
+  align-items: center;
+  padding: 4px 14px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#battle-message {
+  font-size: 13px;
+  line-height: 1.35;
+  color: #f1f2f6;
+  font-weight: 500;
+}
+
+/* パーティーステータス */
+#party-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 10px;
+  background: rgba(10, 14, 30, 0.95);
+  border-bottom: 2px solid var(--panel-border);
+  flex-shrink: 0;
+}
+
+.hero-card {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: rgba(25, 35, 75, 0.7);
+  border: 1.5px solid #2e446d;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.hero-card.active-turn {
+  border-color: var(--gold);
+  background: rgba(45, 65, 120, 0.95);
+  box-shadow: 0 0 8px rgba(244, 196, 48, 0.4);
+}
+
+.hero-card.dead {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.hero-avatar {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.hero-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-name {
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.hero-job {
+  font-size: 10px;
+  color: #a4b0be;
+  margin-left: 6px;
+}
+
+.hero-status-badge {
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #e67e22;
+  color: #fff;
+  display: none;
+}
+
+.gauge-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gauge-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: #ced6e0;
+  width: 18px;
+}
+
+.gauge-bar {
+  flex: 1;
+  height: 6px;
+  background: #1e272e;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.gauge-fill {
+  height: 100%;
+  transition: width 0.3s ease-out;
+}
+
+.gauge-fill.hp {
+  background: var(--hp-green);
+  width: 100%;
+}
+
+.gauge-fill.mp {
+  background: var(--mp-blue);
+  width: 100%;
+}
+
+.gauge-num {
+  font-size: 11px;
+  font-family: 'Press Start 2P', monospace;
+  width: 72px;
+  text-align: right;
+  color: #f1f2f6;
+}
+
+/* コマンドパレット */
+#command-container {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px 10px 10px;
+  background: var(--panel-bg);
+  position: relative;
+  justify-content: space-between;
+}
+
+#command-prompt {
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 6px;
+  text-align: center;
+  font-weight: bold;
+  min-height: 16px;
+}
+
+.command-grid, .submenu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  flex: 1;
+}
+
+.submenu-grid {
+  grid-template-columns: 1fr 1fr;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.cmd-btn {
+  background: linear-gradient(180deg, #2b3a67 0%, #1a2544 100%);
+  color: #fff;
+  border: 1.5px solid var(--panel-border-bright);
+  border-radius: 6px;
+  padding: 10px 8px;
+  font-family: 'DotGothic16', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.1s ease;
+  touch-action: manipulation;
+}
+
+.cmd-btn:active {
+  transform: translateY(2px);
+  background: linear-gradient(180deg, #1f2a4a 0%, #141d36 100%);
+}
+
+.cmd-btn:disabled {
+  opacity: 0.4;
+  filter: grayscale(1);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.skill-btn, .item-btn {
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+}
+
+.skill-name, .item-name {
+  font-size: 13px;
+}
+
+.skill-cost, .item-count {
+  font-size: 10px;
+  color: var(--panel-border-bright);
+  font-family: 'Press Start 2P', monospace;
+}
+
+.cancel-cmd-btn {
+  margin-top: 6px;
+  padding: 6px;
+  background: #485460;
+  color: #fff;
+  border: 1px solid #808e9b;
+  border-radius: 4px;
+  font-family: 'DotGothic16', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ポップアップ・エフェクト */
+#effect-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.damage-popup {
+  position: absolute;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff4757;
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+  animation: floatUp 0.8s ease-out forwards;
+  z-index: 30;
+}
+
+.damage-popup.heal {
+  color: #2ed573;
+}
+
+.damage-popup.critical {
+  font-size: 24px;
+  color: #ffa502;
+  text-shadow: 0 0 10px #ff4757;
+}
+
+.damage-popup.weakness {
+  font-size: 20px;
+  color: #eccc68;
+}
+
+@keyframes floatUp {
+  0% { transform: translate(-50%, 0) scale(0.7); opacity: 0; }
+  20% { transform: translate(-50%, -10px) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -35px) scale(1); opacity: 0; }
+}
+
+/* モーダル */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 5, 20, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal-card {
+  background: #0f172a;
+  border: 3px solid var(--panel-border-bright);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 0 30px rgba(52, 152, 219, 0.4);
+}
+
+.modal-card h1 {
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.modal-card .subtitle {
+  font-size: 12px;
+  color: #a4b0be;
+  margin-bottom: 14px;
+}
+
+.modal-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #dcdde1;
+  margin-bottom: 14px;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.tutorial-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 16px;
+  text-align: left;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.glow-btn {
+  background: linear-gradient(135deg, #e67e22, #f39c12);
+  color: #fff;
+  border: 2px solid #f1c40f;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: 'DotGothic16', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.glow-btn:active {
+  transform: scale(0.96);
+}

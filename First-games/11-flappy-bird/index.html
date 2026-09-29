@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>11 フロッピーバード風 (Flappy Bird)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <!-- コンパクトヘッダー（1行） -->
+    <header class="game-header">
+      <a href="../index.html" class="back-link">← 一覧</a>
+      <h1 class="game-title">🐥 フロッピーバード</h1>
+      <span class="game-badge">#11</span>
+    </header>
+
+    <main class="arcade-card">
+      <!-- HUD（リアルタイムスコア＆ベスト） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">スコア</span>
+          <strong id="score-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト</span>
+          <strong id="best-score-display" class="hud-value gold">0</strong>
+        </div>
+      </section>
+
+      <!-- Canvasゲーム描画エリア（360x540縦長比率） -->
+      <div class="canvas-center-box">
+        <div class="canvas-wrapper">
+          <canvas id="gameCanvas" width="360" height="540"></canvas>
+
+          <!-- スタートオーバーレイ -->
+          <div id="start-overlay" class="game-overlay">
+            <div class="overlay-content">
+              <div class="overlay-icon flap-anim">🐥</div>
+              <h2>FLAPPY BIRD</h2>
+              <p class="overlay-desc">タップして羽ばたき、土管の隙間を通り抜けろ！</p>
+              <div class="medal-guide">
+                <span>🥉10点</span>
+                <span>🥈20点</span>
+                <span>🥇35点</span>
+                <span>💎50点</span>
+              </div>
+              <button id="start-btn" class="btn btn-primary">タップして開始 (PLAY) ⚡</button>
+            </div>
+          </div>
+
+          <!-- ゲームオーバーオーバーレイ -->
+          <div id="gameover-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">💥</div>
+              <h2 class="gameover-title">GAME OVER</h2>
+              <div class="result-board">
+                <div class="medal-box">
+                  <span class="medal-label">MEDAL</span>
+                  <div id="result-medal" class="medal-icon">🎖️</div>
+                </div>
+                <div class="score-box">
+                  <p>スコア: <strong id="final-score">0</strong></p>
+                  <p>ベスト: <strong id="final-best">0</strong></p>
+                </div>
+              </div>
+              <p id="new-record-badge" class="new-record-badge hidden">✨ NEW RECORD! ✨</p>
+              <button id="restart-btn" class="btn btn-primary">もう一度飛ぶ 🔄</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>操作: <strong>[画面タップ]</strong> / <strong>[スペースキー]</strong></span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

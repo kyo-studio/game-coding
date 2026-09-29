@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>10 スネークゲーム (Snake)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <!-- コンパクトヘッダー（1行） -->
+    <header class="game-header">
+      <a href="../index.html" class="back-link">← 一覧</a>
+      <h1 class="game-title">🐍 スネークゲーム</h1>
+      <span class="game-badge">#10</span>
+    </header>
+
+    <main class="arcade-card">
+      <!-- 設定バー（超コンパクト） -->
+      <section class="config-bar">
+        <div class="config-group">
+          <span class="config-label">壁:</span>
+          <div class="toggle-buttons">
+            <button class="mode-btn active" data-wall="classic">🧱 壁あり</button>
+            <button class="mode-btn" data-wall="wrap">🌀 ワープ</button>
+          </div>
+        </div>
+        <div class="config-group">
+          <span class="config-label">速度:</span>
+          <div class="toggle-buttons">
+            <button class="speed-btn" data-speed="slow">初</button>
+            <button class="speed-btn active" data-speed="normal">中</button>
+            <button class="speed-btn" data-speed="fast">上</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- HUD（スコア・長さ・ベスト） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">スコア</span>
+          <strong id="score-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">長さ</span>
+          <strong id="length-display" class="hud-value green">3</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト</span>
+          <strong id="best-score-display" class="hud-value gold">0</strong>
+        </div>
+      </section>
+
+      <!-- Canvasゲーム描画エリア（余白に応じて自動縮小） -->
+      <div class="canvas-center-box">
+        <div class="canvas-wrapper">
+          <canvas id="gameCanvas" width="480" height="480"></canvas>
+
+          <!-- スタートオーバーレイ -->
+          <div id="start-overlay" class="game-overlay">
+            <div class="overlay-content">
+              <div class="overlay-icon">🐍🍎</div>
+              <h2>SNAKE GAME</h2>
+              <p class="overlay-desc">エサを食べてヘビを長くしよう！</p>
+              <button id="start-btn" class="btn btn-primary">スタート (START) ⚡</button>
+            </div>
+          </div>
+
+          <!-- ゲームオーバーオーバーレイ -->
+          <div id="gameover-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">💥</div>
+              <h2 class="gameover-title">GAME OVER</h2>
+              <p id="gameover-reason" class="gameover-reason">衝突しました！</p>
+              <div class="result-stats">
+                <p>スコア: <strong id="final-score">0</strong> 点 / 長さ: <strong id="final-length">0</strong></p>
+                <p id="new-record-badge" class="new-record-badge hidden">✨ NEW RECORD! ✨</p>
+              </div>
+              <button id="restart-btn" class="btn btn-primary">もう一度 🔄</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- スマホ向けバーチャル十字ボタン（D-Pad） -->
+      <section class="dpad-container">
+        <div class="dpad-grid">
+          <button class="dpad-btn dpad-up" data-dir="UP">⬆️</button>
+          <div class="dpad-middle">
+            <button class="dpad-btn dpad-left" data-dir="LEFT">⬅️</button>
+            <div class="dpad-center"></div>
+            <button class="dpad-btn dpad-right" data-dir="RIGHT">➡️</button>
+          </div>
+          <button class="dpad-btn dpad-down" data-dir="DOWN">⬇️</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

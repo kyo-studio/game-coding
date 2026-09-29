@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Quest ToDo - 冒険者ギルドのタスク管理</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DotGothic16&family=Yuji+Boku&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Canvas 紙吹雪・エフェクトレイヤー -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div id="app-container">
+    <!-- ギルドヘッダー / プレイヤープロファイル -->
+    <header id="guild-header">
+      <div class="guild-top-row">
+        <div class="guild-title-group">
+          <span class="guild-icon">⚔️</span>
+          <div>
+            <h1 class="guild-title">QUEST GUILD</h1>
+            <p class="guild-subtitle">冒険者ギルド 依頼掲示板</p>
+          </div>
+        </div>
+        <div class="header-controls">
+          <button id="sound-btn" class="icon-btn" title="サウンド切替">🔊</button>
+        </div>
+      </div>
+
+      <!-- プレイヤー情報カード -->
+      <div class="player-card">
+        <div class="player-avatar-wrap">
+          <div class="player-avatar" id="player-avatar">🧙‍♂️</div>
+          <span class="player-rank-badge" id="player-rank">RANK F</span>
+        </div>
+        <div class="player-details">
+          <div class="player-name-row">
+            <span class="player-name" id="player-name">見習い冒険者</span>
+            <span class="player-title" id="player-title">〜 旅立ちの風 〜</span>
+          </div>
+          <div class="player-stats-row">
+            <span class="stat-badge lv">Lv.<strong id="player-lv">1</strong></span>
+            <span class="stat-badge gold">💰 <span id="player-gold">0</span> G</span>
+            <span class="stat-badge streak">🔥 <span id="player-streak">1</span> 日連続</span>
+          </div>
+          <!-- EXPプログレスバー -->
+          <div class="exp-bar-container">
+            <div class="exp-bar-track">
+              <div class="exp-bar-fill" id="exp-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="exp-text-row">
+              <span>EXP</span>
+              <span id="exp-text">0 / 100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main id="guild-board">
+      <!-- クエスト受注（新規登録）エリア -->
+      <section class="quest-form-section">
+        <button id="toggle-form-btn" class="guild-action-btn">
+          <span>📜 新たなクエストを受注・発行する</span>
+          <span class="toggle-icon">＋</span>
+        </button>
+
+        <form id="quest-form" class="quest-form hidden">
+          <div class="form-group">
+            <label for="quest-title">クエスト名（タスク内容）</label>
+            <input type="text" id="quest-title" placeholder="例: 英語の単語帳を2ページ進める" required maxlength="60">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="quest-category">カテゴリー</label>
+              <select id="quest-category">
+                <option value="main">⚔️ メイン / 仕事</option>
+                <option value="study">📚 学習 / 勉強</option>
+                <option value="health">🍎 健康 / 運動</option>
+                <option value="daily">🧹 日常 / 家事</option>
+                <option value="hobby">✨ 趣味 / その他</option>
+              </select>
+            </div>
+
+            <div class="form-group flex-1">
+              <label for="quest-difficulty">依頼難易度</label>
+              <select id="quest-difficulty">
+                <option value="E">Eランク（かんたん +20EXP / 10G）</option>
+                <option value="C" selected>Cランク（ふつう +50EXP / 30G）</option>
+                <option value="A">Aランク（やりがい +120EXP / 80G）</option>
+                <option value="S">Sランク（超大作 +300EXP / 200G）</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="quest-deadline">期限（任意）</label>
+            <input type="datetime-local" id="quest-deadline">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-quest-btn">⚔️ クエストを掲示する</button>
+            <button type="button" id="cancel-form-btn" class="cancel-btn">キャンセル</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- フィルター・絞り込みバー -->
+      <section class="filter-section">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">全クエスト</button>
+          <button class="filter-tab" data-filter="active">受注中</button>
+          <button class="filter-tab" data-filter="completed">討伐完了</button>
+        </div>
+        <div class="category-chips">
+          <button class="chip-btn active" data-cat="all">すべて</button>
+          <button class="chip-btn" data-cat="main">⚔️ 仕事</button>
+          <button class="chip-btn" data-cat="study">📚 勉強</button>
+          <button class="chip-btn" data-cat="health">🍎 健康</button>
+          <button class="chip-btn" data-cat="daily">🧹 日常</button>
+          <button class="chip-btn" data-cat="hobby">✨ 趣味</button>
+        </div>
+      </section>
+
+      <!-- クエスト一覧カードリスト -->
+      <section class="quest-list-section">
+        <div class="list-summary">
+          <span id="quest-count-text">受注中のクエスト: 0 件</span>
+          <button id="clear-completed-btn" class="subtle-btn hidden">討伐済みを整理</button>
+        </div>
+
+        <div id="quest-list" class="quest-list">
+          <!-- JSで動的生成 -->
+        </div>
+
+        <!-- クエストが0件のときの空表示 -->
+        <div id="empty-state" class="empty-state hidden">
+          <div class="empty-icon">📜</div>
+          <p class="empty-title">現在 受注中のクエストはありません</p>
+          <p class="empty-desc">新しいクエストを受注して冒険を進めましょう！</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- レベルアップモーダル -->
+    <div id="levelup-modal" class="modal-overlay hidden">
+      <div class="modal-card levelup-card">
+        <div class="levelup-shine"></div>
+        <h2 class="modal-title">✨ LEVEL UP! ✨</h2>
+        <div class="levelup-badge">Lv.<span id="modal-lv">2</span></div>
+        <p class="levelup-desc">冒険者の実力が認められました！</p>
+        <div class="levelup-reward-box">
+          <p>新しい称号: <strong id="modal-new-title">駆け出しハンター</strong></p>
+          <p>ボーナス報酬: 💰 <strong id="modal-gold-bonus">50</strong> G</p>
+        </div>
+        <button id="close-levelup-btn" class="claim-btn">冒険を続ける</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

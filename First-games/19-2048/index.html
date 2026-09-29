@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>19 2048パズル (2048 Puzzle)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <!-- コンパクトヘッダー（1行） -->
+    <header class="game-header">
+      <a href="../index.html" class="back-link">← 一覧</a>
+      <h1 class="game-title">🔢 2048 パズル</h1>
+      <span class="game-badge">#19</span>
+    </header>
+
+    <main class="arcade-card">
+      <!-- HUD（スコア・ベスト・UNDO・リセット） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">スコア</span>
+          <strong id="score-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト</span>
+          <strong id="best-score-display" class="hud-value gold">0</strong>
+        </div>
+        <div class="hud-actions">
+          <button id="undo-btn" class="hud-btn btn-undo" aria-label="1手戻す" title="1手戻す">↩️ 戻す</button>
+          <button id="reset-btn" class="hud-btn btn-reset" aria-label="最初から" title="最初から">🔄</button>
+        </div>
+      </section>
+
+      <!-- 4×4 2048ゲーム盤面 -->
+      <div class="board-center-box">
+        <div class="board-wrapper" id="board-wrapper">
+          <!-- 背景グリッドセル (4x4 = 16マス) -->
+          <div class="grid-background">
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+          </div>
+
+          <!-- 動的タイルコンテナ -->
+          <div class="tile-container" id="tile-container"></div>
+
+          <!-- 2048達成祝賀オーバーレイ -->
+          <div id="win-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">🏆✨🎉</div>
+              <h2 class="win-title">YOU REACHED 2048!</h2>
+              <p class="overlay-desc">おめでとうございます！2048タイルを完成させました！<br>さらに大きな数字を目指して続行しますか？</p>
+              <div class="overlay-actions">
+                <button id="keep-going-btn" class="btn btn-primary">続けてプレイ ⏩</button>
+                <button id="win-restart-btn" class="btn btn-secondary">もう一度 🔄</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ゲームオーバーオーバーレイ -->
+          <div id="gameover-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">💀💥</div>
+              <h2 class="gameover-title">GAME OVER</h2>
+              <p class="overlay-desc">これ以上動かせるタイルがありません！</p>
+              <div class="result-stats">
+                <p>最終スコア: <strong id="final-score">0</strong> 点</p>
+              </div>
+              <p id="new-record-badge" class="new-record-badge hidden">✨ NEW RECORD! ✨</p>
+              <div class="overlay-actions">
+                <button id="gameover-undo-btn" class="btn btn-undo-modal">1手戻す ↩️</button>
+                <button id="restart-btn" class="btn btn-primary">もう一度挑戦 🔄</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- スマホ向けバーチャル十字キー（D-Pad） -->
+      <section class="control-panel">
+        <div class="dpad-box">
+          <button class="dpad-btn dpad-up" id="btn-up" aria-label="上">▲</button>
+          <div class="dpad-mid">
+            <button class="dpad-btn dpad-left" id="btn-left" aria-label="左">◀</button>
+            <div class="dpad-center"></div>
+            <button class="dpad-btn dpad-right" id="btn-right" aria-label="右">▶</button>
+          </div>
+          <button class="dpad-btn dpad-down" id="btn-down" aria-label="下">▼</button>
+        </div>
+      </section>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>操作: <strong>画面スワイプ</strong> / <strong>[↑][↓][←][→] / [W][A][S][D]</strong> / <strong>十字キー</strong></span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

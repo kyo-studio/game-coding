@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブラウザゲーム開発コレクション</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #60a5fa, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .game-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: #3b82f6;
+      box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
+    }
+    .card-badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #f1f5f9;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #64748b;
+      border-top: 1px solid #334155;
+      padding-top: 12px;
+    }
+    .difficulty {
+      color: #10b981;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Web Game Coding Collection</h1>
+      <p class="lead">ブラウザゲームを作りながら学ぶプログラミングコレクション</p>
+    </header>
+
+    <main class="game-grid">
+      <!-- 01 数当てゲーム -->
+      <a href="01-number-guess/index.html" class="game-card">
+        <div>
+          <span class="card-badge">Game #01</span>
+          <h2 class="card-title">数当てゲーム</h2>
+          <p class="card-desc">1〜100の秘密の数字をヒントを頼りに7回以内に当てるクラシックなゲーム。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty">★☆☆☆☆ (超初級)</span>
+          <span>DOM / 乱数 / 条件分岐</span>
+        </div>
+      </a>
+
+      <!-- 02 じゃんけんバトル -->
+      <a href="02-janken-battle/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3);">Game #02</span>
+          <h2 class="card-title">じゃんけんバトル</h2>
+          <p class="card-desc">CPUとじゃんけん勝負！リズム演出や連勝記録、勝率計算、LocalStorage保存を体験。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty">★☆☆☆☆ (超初級)</span>
+          <span>配列 / オブジェクト / タイマー</span>
+        </div>
+      </a>
+
+      <!-- 03 クリック連打測定器 -->
+      <a href="03-cps-test/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">Game #03</span>
+          <h2 class="card-title">クリック連打測定器</h2>
+          <p class="card-desc">指先のスピードを測定！リアルタイムCPS計算、波紋エフェクト、モード別自己ベスト記録。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty">★☆☆☆☆ (超初級)</span>
+          <span>高精度タイマー / 座標 / State</span>
+        </div>
+      </a>
+
+      <!-- 04 反射神経テスト -->
+      <a href="04-reaction-test/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.3);">Game #04</span>
+          <h2 class="card-title">反射神経テスト</h2>
+          <p class="card-desc">画面が緑になった瞬間に即クリック！ランダムタイマー、フライング検知、5回平均測定。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty">★☆☆☆☆ (超初級)</span>
+          <span>ランダムタイマー / State / 配列集計</span>
+        </div>
+      </a>
+
+      <!-- 05 タイマー爆弾解除 -->
+      <a href="05-timer-bomb/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3);">Game #05</span>
+          <h2 class="card-title">タイマー爆弾解除</h2>
+          <p class="card-desc">指定秒数ピッタリで信管を切断せよ！ブラインドモード、ミリ秒誤差判定、爆破シェイク演出。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty">★☆☆☆☆ (超初級)</span>
+          <span>rAFループ / Math.abs / ブラインド</span>
+        </div>
+      </a>
+
+      <!-- 06 神経衰弱 -->
+      <a href="06-memory-match/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3);">Game #06</span>
+          <h2 class="card-title">神経衰弱</h2>
+          <p class="card-desc">3D立体回転でペアを揃えろ！Fisher-Yatesシャッフル、動的生成、3つ星評価システム。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty">★☆☆☆☆ (超初級)</span>
+          <span>シャッフル / 3Dカード / ロック制御</span>
+        </div>
+      </a>
+
+      <!-- 07 ドット避けゲーム -->
+      <a href="07-dot-dodge/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">Game #07</span>
+          <h2 class="card-title">ドット避けゲーム</h2>
+          <p class="card-desc">Canvas 2Dゲーム開発入門！四方から迫る赤い弾を避け続け、星やシールドでスコアを伸ばせ。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #3b82f6;">★★☆☆☆ (初級)</span>
+          <span>Canvas / Game Loop / 衝突判定</span>
+        </div>
+      </a>
+
+      <!-- 08 フルーツキャッチ -->
+      <a href="08-fruit-catch/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(251, 146, 60, 0.2); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.3);">Game #08</span>
+          <h2 class="card-title">フルーツキャッチ</h2>
+          <p class="card-desc">落ちてくる果物をカゴでキャッチ！重力物理、AABB矩形当たり判定、コンボ倍率、浮遊テキスト。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #3b82f6;">★★☆☆☆ (初級)</span>
+          <span>重力物理 / AABB判定 / コンボ倍率</span>
+        </div>
+      </a>
+
+      <!-- 09 ピンポン (Pong) -->
+      <a href="09-pong/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">Game #09</span>
+          <h2 class="card-title">ピンポン (Pong)</h2>
+          <p class="card-desc">元祖2Dアーケード対戦！反射ベクトル物理、打点角度計算、CPU追従AI、ラリー加速演出。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #3b82f6;">★★☆☆☆ (初級)</span>
+          <span>反射物理 / 三角関数 / CPU AI</span>
+        </div>
+      </a>
+
+      <!-- 10 スネークゲーム -->
+      <a href="10-snake/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">Game #10</span>
+          <h2 class="card-title">スネークゲーム</h2>
+          <p class="card-desc">配列キュー（Queue）とグリッド移動！逆走防止、自己衝突判定、スワイプ/D-Pad操作。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #3b82f6;">★★☆☆☆ (初級)</span>
+          <span>グリッド / キュー配列 / スワイプ</span>
+        </div>
+      </a>
+
+      <!-- 11 フロッピーバード風 -->
+      <a href="11-flappy-bird/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(253, 224, 71, 0.2); color: #fde047; border: 1px solid rgba(253, 224, 71, 0.3);">Game #11</span>
+          <h2 class="card-title">フロッピーバード風</h2>
+          <p class="card-desc">タップで羽ばたき重力ジャンプ！速度連動回転、土管ペア生成スクロール、円矩形衝突判定。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #3b82f6;">★★☆☆☆ (初級)</span>
+          <span>重力物理 / 回転行列 / 土管スクロール</span>
+        </div>
+      </a>
+
+      <!-- 12 フロッガー風 -->
+      <a href="12-frogger/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3);">Game #12</span>
+          <h2 class="card-title">フロッガー風</h2>
+          <p class="card-desc">道路＆川横断アクション！多層レーン交通、丸太の移動床追従、水没判定、5箇所ゴール救出。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #3b82f6;">★★☆☆☆ (初級)</span>
+          <span>多層レーン / 移動床追従 / 水没判定</span>
+        </div>
+      </a>
+
+      <!-- 13 ブロック崩し -->
+      <a href="13-breakout/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(129, 140, 248, 0.2); color: #818cf8; border: 1px solid rgba(129, 140, 248, 0.3);">Game #13</span>
+          <h2 class="card-title">ブロック崩し</h2>
+          <p class="card-desc">2次元配列ブロックマップ！耐久度HP、精密反射角、マルチボール＆ワイドパドルアイテム。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #a855f7;">★★★☆☆ (初中級)</span>
+          <span>2D配列 / 衝突面判定 / パワーアップ</span>
+        </div>
+      </a>
+
+      <!-- 14 インベーダー風シューティング -->
+      <a href="14-invaders/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3);">Game #14</span>
+          <h2 class="card-title">インベーダー風</h2>
+          <p class="card-desc">敵編隊の同期行進・テンポ加速！迎撃弾、4基の破壊可能シールド、ボーナスUFO飛来。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #a855f7;">★★★☆☆ (初中級)</span>
+          <span>編隊行進 / 弾幕管理 / 破壊可能シールド</span>
+        </div>
+      </a>
+
+      <!-- 15 縦スクロール空中戦 -->
+      <a href="15-vertical-shmup/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">Game #15</span>
+          <h2 class="card-title">縦スクロール空中戦</h2>
+          <p class="card-desc">敵編隊ウェーブ、3WAY拡散ショット、シールド、メガボム全画面攻撃、巨大ボス戦艦バトル！</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #a855f7;">★★★☆☆ (初中級)</span>
+          <span>曲線飛行 / 扇状弾幕 / 巨大ボス戦</span>
+        </div>
+      </a>
+
+      <!-- 16 アステロイド風 -->
+      <a href="16-asteroids/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.3);">Game #16</span>
+          <h2 class="card-title">アステロイド風</h2>
+          <p class="card-desc">360度旋回・スラスター無重力慣性飛行！撃破で分裂する小惑星群、緊急ハイパースペースワープ。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #a855f7;">★★★☆☆ (初中級)</span>
+          <span>無重力慣性 / 360°回転 / 分裂物理</span>
+        </div>
+      </a>
+
+      <!-- 17 パックマン風 -->
+      <a href="17-pacman/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(253, 224, 71, 0.2); color: #fde047; border: 1px solid rgba(253, 224, 71, 0.3);">Game #17</span>
+          <h2 class="card-title">パックマン風</h2>
+          <p class="card-desc">迷路ドットイート＆4種の個性派ゴーストAI！パワーエサで青くイジケさせて一発逆転捕食。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #a855f7;">★★★☆☆ (初中級)</span>
+          <span>迷路探索 / 4種ゴーストAI / パワーペレット</span>
+        </div>
+      </a>
+
+      <!-- 18 タワーディフェンス -->
+      <a href="18-tower-defense/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">Game #18</span>
+          <h2 class="card-title">タワーディフェンス</h2>
+          <p class="card-desc">曲折ルートから迫る敵軍を迎撃！3種のタワー建設・射程＆威力強化・スロー＆範囲爆発戦略。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #a855f7;">★★★☆☆ (初中級)</span>
+          <span>経路追従 / 3種防衛タワー / ウェーブ戦略</span>
+        </div>
+      </a>
+
+      <!-- 19 2048パズル -->
+      <a href="19-2048/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3);">Game #19</span>
+          <h2 class="card-title">2048 パズル</h2>
+          <p class="card-desc">同じ数字を合体させて2048を目指せ！4×4スワイプ操作、ポップアニメーション、一手戻すUNDO機能。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #f59e0b;">★★★★☆ (中級)</span>
+          <span>スライド合体 / 2D配列変換 / UNDO履歴</span>
+        </div>
+      </a>
+
+      <!-- 20 マッチ3パズル -->
+      <a href="20-match3/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3);">Game #20</span>
+          <h2 class="card-title">マッチ3パズル</h2>
+          <p class="card-desc">8×8宝石スワップ3連消し！重力落下＆新規補充、爽快な自動連鎖コンボ、4/5個消し特殊ボム。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #f59e0b;">★★★★☆ (中級)</span>
+          <span>3連消し判定 / 落下補充 / 連鎖コンボ</span>
+        </div>
+      </a>
+
+      <!-- 21 倉庫番 (Sokoban) -->
+      <a href="21-sokoban/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">Game #21</span>
+          <h2 class="card-title">倉庫番</h2>
+          <p class="card-desc">荷物を押して目的地へ運べ！全5ステージ、無限UNDO巻き戻し、歩数・押し数最少記録。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #f59e0b;">★★★★☆ (中級)</span>
+          <span>グリッド物理 / 履歴スタック / Canvas 2D</span>
+        </div>
+      </a>
+
+      <!-- 22 マインスイーパー (Minesweeper) -->
+      <a href="22-minesweeper/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">Game #22</span>
+          <h2 class="card-title">マインスイーパー</h2>
+          <p class="card-desc">地雷を避けて安全なマスを開放！初手安全保証、空白連鎖オープン、Chord Open一括開示。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #f59e0b;">★★★★☆ (中級)</span>
+          <span>Flood Fill / コードオープン / 初手安全</span>
+        </div>
+      </a>
+
+      <!-- 23 落ちものパズル (Block Fall) -->
+      <a href="23-block-fall/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.4);">Game #23</span>
+          <h2 class="card-title">落ちものパズル</h2>
+          <p class="card-desc">7種のブロックを並べてライン消去！7-Bag抽選、SRS壁蹴り回転、HOLD、ゴースト表示。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>7-Bag / SRSウォールキック / ハードドロップ</span>
+        </div>
+      </a>
+
+      <!-- 24 連鎖パズル (Chain Fall) -->
+      <a href="24-chain-fall/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4);">Game #24</span>
+          <h2 class="card-title">連鎖パズル</h2>
+          <p class="card-desc">同色4個連結でぷよ消滅！ちぎり重力落下、大連鎖コンボ、音階上昇ファンファーレ。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>4連結判定 / ちぎり重力 / 大連鎖ループ</span>
+        </div>
+      </a>
+
+      <!-- 25 ジャンプアクション (Platformer) -->
+      <a href="25-platformer/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">Game #25</span>
+          <h2 class="card-title">ジャンプアクション</h2>
+          <p class="card-desc">横スクロール2Dプラットフォーマー！敵踏みつけ、はてなブロック頭突き、キノコ巨大化、全3ステージ。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>2D物理 / カメラ追従 / 敵AI・ブロック</span>
+        </div>
+      </a>
+
+      <!-- 26 エンドレスランナー (Cyber Rush) -->
+      <a href="26-endless-runner/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(6, 182, 212, 0.2); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.4);">Game #26</span>
+          <h2 class="card-title">エンドレスランナー</h2>
+          <p class="card-desc">ネオンシティを疾走する3D風ランナー！3レーン移動、ジャンプ、スライド、マグネット＆ブースト。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>3Dパースペクティブ / スワイプ / パワーアップ</span>
+        </div>
+      </a>
+
+      <!-- 27 リズムゲーム (Rhythm Beat) -->
+      <a href="27-rhythm-beat/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">Game #27</span>
+          <h2 class="card-title">リズムゲーム</h2>
+          <p class="card-desc">4レーン本格リズムアクション！ロングノーツ対応、Web Audio音ズレ同期、EASY/HARD 2曲収録。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>Web Audio同期 / 4レーン / ホールドノーツ</span>
+        </div>
+      </a>
+
+      <!-- 28 ダンジョン探索 (Rogue Explorer) -->
+      <a href="28-dungeon-crawler/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">Game #28</span>
+          <h2 class="card-title">ダンジョン探索</h2>
+          <p class="card-desc">ターン制ローグライクRPG！自動生成ダンジョン、視野探索（Fog of War）、装備強化、全5階踏破。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>ダンジョン自動生成 / 視野判定 / ターン制AI</span>
+        </div>
+      </a>
+
+      <!-- 29 2Dグランプリレース (Grand Prix Racer) -->
+      <a href="29-topdown-racing/index.html" class="game-card">
+        <div>
+          <span class="card-badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4);">Game #29</span>
+          <h2 class="card-title">2Dグランプリレース</h2>
+          <p class="card-desc">見下ろし型トップダウンレーサー！ドリフト物理、AIライバル対戦、ニトロ加速、全3サーキット。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #ef4444;">★★★★★ (上級)</span>
+          <span>車両物理 / ドリフト / AIウェイポイント走行</span>
+        </div>
+      </a>
+
+      <!-- 30 ターン制コマンドRPG (Crystal Saga) -->
+      <a href="30-command-rpg/index.html" class="game-card" style="border-color: #f59e0b; box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);">
+        <div>
+          <span class="card-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5);">Game #30 [FINAL]</span>
+          <h2 class="card-title" style="color: #fcd34d;">コマンドバトルRPG</h2>
+          <p class="card-desc">グランドフィナーレ！3人パーティー編成、属性魔法・大技スキル、ボス連戦、Web Audio音響。</p>
+        </div>
+        <div class="card-footer">
+          <span class="difficulty" style="color: #f59e0b;">★★★★★ (最高峰)</span>
+          <span>コマンドバトル / 属性システム / パーティーAI</span>
+        </div>
+      </a>
+    </main>
+  </div>
+</body>
+</html>

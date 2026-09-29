@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>05 タイマー爆弾解除ゲーム (Timer Bomb Defusal)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <header class="game-header">
+      <div class="header-top">
+        <a href="../index.html" class="back-link">← 一覧に戻る</a>
+        <span class="game-badge">Game #05</span>
+      </div>
+      <h1>時限爆弾解除システム</h1>
+      <p class="subtitle">Timer Bomb Defusal Protocol</p>
+    </header>
+
+    <main class="console-panel">
+      <!-- 設定バー（モード＆目標秒数選択） -->
+      <section class="config-bar">
+        <div class="config-group">
+          <span class="config-label">視覚モード:</span>
+          <div class="segmented-control">
+            <button class="mode-toggle-btn active" data-mode="normal">👁️ 通常</button>
+            <button class="mode-toggle-btn" data-mode="blind">🙈 ブラインド</button>
+          </div>
+        </div>
+
+        <div class="config-group">
+          <span class="config-label">目標タイム:</span>
+          <div class="segmented-control">
+            <button class="target-btn" data-target="3">3.000s</button>
+            <button class="target-btn active" data-target="5">5.000s</button>
+            <button class="target-btn" data-target="10">10.000s</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 統計・ベスト記録 -->
+      <section class="status-ribbon">
+        <div class="ribbon-item">
+          <span class="ribbon-label">🎯 最小誤差ベスト</span>
+          <strong id="best-diff-display" class="ribbon-value gold">-- ms</strong>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">🔥 連続解除成功</span>
+          <strong id="streak-display" class="ribbon-value">0 回</strong>
+        </div>
+      </section>
+
+      <!-- 爆弾メインディスプレイ（デジタルLEDパネル） -->
+      <section class="bomb-chassis">
+        <div class="warning-light-bar">
+          <span class="light-bulb" id="light-1"></span>
+          <span class="light-bulb" id="light-2"></span>
+          <span class="light-bulb" id="light-3"></span>
+          <span class="hazard-text">⚠️ HAZARD DETECTED ⚠️</span>
+          <span class="light-bulb" id="light-4"></span>
+          <span class="light-bulb" id="light-5"></span>
+          <span class="light-bulb" id="light-6"></span>
+        </div>
+
+        <!-- デジタルタイマー液晶画面 -->
+        <div class="digital-display" id="digital-display">
+          <div class="display-header">
+            <span class="target-indicator">TARGET: <strong id="target-label">5.000</strong>s</span>
+            <span id="display-mode-badge" class="mode-badge">NORMAL</span>
+          </div>
+          <div class="timer-digits-wrapper">
+            <span id="timer-display" class="timer-digits">0.000</span>
+            <span class="timer-unit">SEC</span>
+          </div>
+          <div id="blind-warning" class="blind-warning hidden">
+            👁️‍🗨️ DISPLAY MASKED - 体内時計で止めろ！
+          </div>
+        </div>
+
+        <!-- 導火線 / プログレスバー -->
+        <div class="fuse-wire-container">
+          <div id="fuse-progress" class="fuse-progress" style="width: 0%;"></div>
+        </div>
+      </section>
+
+      <!-- メインアクションボタン (START / DEFUSE) -->
+      <section class="control-deck">
+        <button id="action-btn" class="big-defuse-btn state-ready">
+          <span id="action-icon" class="btn-icon">⚡</span>
+          <span id="action-text" class="btn-text">START (作動開始)</span>
+        </button>
+      </section>
+
+      <!-- 解除結果カード（停止時に表示） -->
+      <section id="result-card" class="result-card hidden">
+        <div id="result-title" class="result-title">解除成功！</div>
+        <div class="result-metrics">
+          <div class="metric-box">
+            <span class="metric-label">停止時刻</span>
+            <strong id="final-stop-time" class="metric-val">5.012s</strong>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">目標との誤差</span>
+            <strong id="final-diff-time" class="metric-val diff">+12ms</strong>
+          </div>
+        </div>
+        <p id="result-message" class="result-msg">神業の正確さです！爆弾は無力化されました。</p>
+        <button id="retry-btn" class="btn-retry">次のミッションへ 🔄</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

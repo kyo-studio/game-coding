@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>08 フルーツキャッチ (Fruit Catch)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <div class="header-top">
+        <a href="../index.html" class="back-link">← 一覧に戻る</a>
+        <span class="game-badge">Game #08</span>
+      </div>
+      <h1>フルーツキャッチ</h1>
+      <p class="subtitle">HTML5 Canvas Fruit Catcher</p>
+    </header>
+
+    <main class="game-card">
+      <!-- ヘッダーHUD（スコア・コンボ・ライフ・ベスト記録） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">スコア</span>
+          <strong id="score-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">コンボ</span>
+          <strong id="combo-display" class="hud-value combo">0 COMBO</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">ライフ</span>
+          <div id="lives-container" class="lives-container">
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+          </div>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト</span>
+          <strong id="best-score-display" class="hud-value gold">0</strong>
+        </div>
+      </section>
+
+      <!-- Canvasゲーム描画エリア -->
+      <div class="canvas-wrapper">
+        <canvas id="gameCanvas" width="500" height="600"></canvas>
+
+        <!-- スタートオーバーレイ -->
+        <div id="start-overlay" class="game-overlay">
+          <div class="overlay-content">
+            <div class="overlay-icon">🧺🍎</div>
+            <h2>FRUIT CATCH</h2>
+            <p class="overlay-desc">カゴを左右に動かして、落ちてくるフルーツをキャッチ！<br>爆弾💣を避け、落とさず連続キャッチでコンボ倍率アップ！</p>
+            <div class="fruits-guide">
+              <span>🍎 +10</span>
+              <span>🍌 +20</span>
+              <span>🍓 +30</span>
+              <span>🍉 +50</span>
+              <span>🍍 +100</span>
+              <span class="bomb-guide">💣 爆発(減点&ミス)</span>
+            </div>
+            <div class="controls-guide">
+              <p>【操作方法】</p>
+              <p>⌨️ 左右矢印キー [←] [→] または [A] [D]</p>
+              <p>🖱️ マウス移動 / タッチドラッグ</p>
+            </div>
+            <button id="start-btn" class="btn btn-primary">ゲームスタート 🚀</button>
+          </div>
+        </div>
+
+        <!-- ゲームオーバーオーバーレイ -->
+        <div id="gameover-overlay" class="game-overlay hidden">
+          <div class="overlay-content">
+            <div class="overlay-icon">🧺💥</div>
+            <h2 class="gameover-title">GAME OVER</h2>
+            <div class="result-stats">
+              <p>最終スコア: <strong id="final-score">0</strong> 点</p>
+              <p>最大コンボ: <strong id="final-combo">0</strong> 連続</p>
+              <p id="new-record-badge" class="new-record-badge hidden">✨ NEW HIGH SCORE! ✨</p>
+            </div>
+            <button id="restart-btn" class="btn btn-primary">もう一度挑戦 🔄</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>左右移動: <strong>[←] [→]</strong> / <strong>[A] [D]</strong> / <strong>[マウス・タッチ]</strong></span>
+        <span>一時停止: <strong>[P]</strong></span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

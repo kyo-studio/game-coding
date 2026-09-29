@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>15 縦スクロール空中戦 (Vertical SHMUP)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <!-- コンパクトヘッダー（1行） -->
+    <header class="game-header">
+      <a href="../index.html" class="back-link">← 一覧</a>
+      <h1 class="game-title">🛩️ 空中戦シューティング</h1>
+      <span class="game-badge">#15</span>
+    </header>
+
+    <main class="arcade-card">
+      <!-- HUD（スコア・ライフ・ボム・ベスト） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">スコア</span>
+          <strong id="score-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">ライフ</span>
+          <span id="lives-display" class="hud-lives">🚀🚀🚀</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">BOMB</span>
+          <strong id="bombs-display" class="hud-value bomb">💣x2</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト</span>
+          <strong id="best-score-display" class="hud-value gold">0</strong>
+        </div>
+      </section>
+
+      <!-- ボスHPバー（ボス戦時のみ表示） -->
+      <div id="boss-hud" class="boss-hud hidden">
+        <div class="boss-label-box">
+          <span class="boss-warning-blink">🚨 BOSS BATTLE 🚨</span>
+          <span id="boss-hp-text" class="boss-hp-text">100%</span>
+        </div>
+        <div class="boss-hp-bar">
+          <div id="boss-hp-fill" class="boss-hp-fill"></div>
+        </div>
+      </div>
+
+      <!-- Canvasゲーム描画エリア（380x480 縦長比率） -->
+      <div class="canvas-center-box">
+        <div class="canvas-wrapper">
+          <canvas id="gameCanvas" width="380" height="480"></canvas>
+
+          <!-- スタートオーバーレイ -->
+          <div id="start-overlay" class="game-overlay">
+            <div class="overlay-content">
+              <div class="overlay-icon">🛩️💥🛸</div>
+              <h2>VERTICAL SHMUP</h2>
+              <p class="overlay-desc">敵編隊を撃破して強化カプセルをゲット！<br>最深部の巨大ボス戦艦を撃沈せよ！</p>
+              <div class="items-guide">
+                <span>🔴 P(3WAY強化)</span>
+                <span>🔵 S(バリア)</span>
+                <span>💣 B(ボム+1)</span>
+              </div>
+              <button id="start-btn" class="btn btn-primary">スクランブル発進 (START) ⚡</button>
+            </div>
+          </div>
+
+          <!-- ボスクリアオーバーレイ -->
+          <div id="clear-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">🏆🎖️</div>
+              <h2 class="clear-title">MISSION COMPLETE!</h2>
+              <p class="overlay-desc">巨大ボス戦艦の撃沈に成功しました！<br>空の平和は守られた！</p>
+              <div class="result-stats">
+                <p>最終スコア: <strong id="clear-score">0</strong> 点</p>
+                <p>撃破ボーナス: <strong>+5,000</strong> 点</p>
+              </div>
+              <button id="restart-clear-btn" class="btn btn-primary">もう一度出撃 🔄</button>
+            </div>
+          </div>
+
+          <!-- ゲームオーバーオーバーレイ -->
+          <div id="gameover-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">💥</div>
+              <h2 class="gameover-title">GAME OVER</h2>
+              <p id="gameover-reason" class="gameover-reason">自機が撃墜されてしまいました！</p>
+              <div class="result-stats">
+                <p>最終スコア: <strong id="final-score">0</strong> 点</p>
+              </div>
+              <p id="new-record-badge" class="new-record-badge hidden">✨ NEW RECORD! ✨</p>
+              <button id="restart-btn" class="btn btn-primary">もう一度挑戦 🔄</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- スマホ向けメガボムボタン -->
+      <section class="bomb-panel">
+        <button id="btn-bomb" class="btn-bomb">💣 MEGA BOMB 発動 (全画面攻撃)</button>
+      </section>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>操作: <strong>タッチドラッグ追従 / [矢印/WASD] 移動</strong> | <strong>[B] ボム</strong></span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

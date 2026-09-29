@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>29 2Dグランプリレース (Grand Prix Racer)</title>
+  <link rel="stylesheet" href="style.css?v=20260915_1">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <!-- コンパクトヘッダー（1行） -->
+    <header class="game-header">
+      <a href="../index.html" class="back-link">← 一覧</a>
+      <h1 class="game-title">🏎️ グランプリレーサー</h1>
+      <span class="game-badge">#29</span>
+    </header>
+
+    <main class="arcade-card">
+      <!-- HUDバー（順位・ラップ・タイム・ニトロゲージ） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">POS</span>
+          <strong id="pos-display" class="hud-value gold">1st</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">LAP</span>
+          <strong id="lap-display" class="hud-value cyan">1/3</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">TIME</span>
+          <strong id="time-display" class="hud-value">00:00.00</strong>
+        </div>
+        <div class="hud-item nitro-item">
+          <span class="hud-label">⚡ NITRO</span>
+          <div class="nitro-bar">
+            <div id="nitro-fill" class="nitro-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- メインゲーム画面 (Canvas 340x230 + ミニマップ) -->
+      <div class="board-center-box">
+        <div class="canvas-wrapper">
+          <canvas id="gameCanvas" width="340" height="230"></canvas>
+
+          <!-- スタートシグナル表示 (オーバーレイ) -->
+          <div id="signal-overlay" class="signal-box hidden">
+            <span class="signal-light red" id="sig-1"></span>
+            <span class="signal-light red" id="sig-2"></span>
+            <span class="signal-light red" id="sig-3"></span>
+            <span class="signal-light green" id="sig-go"></span>
+          </div>
+
+          <!-- コース選択・スタートオーバーレイ -->
+          <div id="start-overlay" class="game-overlay">
+            <div class="overlay-content start-content">
+              <div class="overlay-header-row">
+                <span class="overlay-mini-icon">🏎️</span>
+                <h2>GRAND PRIX RACER</h2>
+              </div>
+              <p class="overlay-desc">3周勝負！ライバルAIに勝利せよ！ドリフトとニトロを駆使して最速タイムを目指せ！</p>
+              
+              <div class="course-select-box">
+                <button class="course-btn active" data-course="0">
+                  <span class="course-title">1. ビギナーズオーバル</span>
+                  <span class="course-diff easy">EASY (高速オーバル)</span>
+                </button>
+                <button class="course-btn" data-course="1">
+                  <span class="course-title">2. シティサーキット</span>
+                  <span class="course-diff med">MEDIUM (連続シケイン)</span>
+                </button>
+                <button class="course-btn" data-course="2">
+                  <span class="course-title">3. サンセットコースト</span>
+                  <span class="course-diff hard">HARD (難関S字コーナー)</span>
+                </button>
+              </div>
+
+              <div class="control-legend">
+                <span>PC: <strong>↑ / W (アクセル)</strong> / <strong>← → / A D (ステア)</strong> / <strong>Space (ニトロ)</strong></span>
+              </div>
+              <button id="start-btn" class="btn btn-primary start-play-btn">START RACE 🚦</button>
+            </div>
+          </div>
+
+          <!-- レース結果リザルトオーバーレイ -->
+          <div id="result-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon" id="result-icon">🏆✨🏁</div>
+              <h2 class="result-title" id="result-title">1st PLACE!</h2>
+              
+              <div class="result-stats">
+                <p>最終順位: <strong id="res-pos" class="gold">1st / 4</strong></p>
+                <p>トータルタイム: <strong id="res-total-time" class="cyan">00:00.00</strong></p>
+                <p>ベストラップ: <strong id="res-best-lap" class="green">00:00.00</strong></p>
+                <p id="new-record-badge" class="new-record-badge hidden">✨ NEW RECORD! ✨</p>
+              </div>
+
+              <div class="result-btn-group">
+                <button id="retry-btn" class="btn btn-secondary">リトライ 🔄</button>
+                <button id="select-course-btn" class="btn btn-primary">コース選択 🏁</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- モバイル用コントロールパッド (左: ステアリング / 右: ペダル＆ニトロ) -->
+      <div class="racing-controls">
+        <div class="steer-group">
+          <button class="pad-btn steer-btn" data-act="left" aria-label="左ステアリング">◀</button>
+          <button class="pad-btn steer-btn" data-act="right" aria-label="右ステアリング">▶</button>
+        </div>
+        <div class="pedal-group">
+          <button class="pad-btn brake-btn" data-act="brake" aria-label="ブレーキ">🛑 BRAKE</button>
+          <button class="pad-btn nitro-btn" data-act="nitro" aria-label="ニトロ">⚡ NITRO</button>
+          <button class="pad-btn accel-btn" data-act="accel" aria-label="アクセル">🏎️ GO</button>
+        </div>
+      </div>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>キーボード: <strong>↑ (アクセル) / ↓ (ブレーキ) / ← → (ステア) / Space (ニトロ)</strong></span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260915_1"></script>
+</body>
+</html>

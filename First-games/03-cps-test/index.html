@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 クリック連打測定器 (CPSテスト)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <div class="header-top">
+        <a href="../index.html" class="back-link">← 一覧に戻る</a>
+        <span class="game-badge">Game #03</span>
+      </div>
+      <h1>クリック連打測定器</h1>
+      <p class="subtitle">Clicks Per Second (CPS) Test</p>
+    </header>
+
+    <main class="game-card">
+      <!-- 制限時間モード選択タブ -->
+      <section class="mode-section">
+        <span class="mode-label">測定時間:</span>
+        <div class="mode-buttons">
+          <button class="mode-btn" data-time="1">1秒</button>
+          <button class="mode-btn active" data-time="5">5秒</button>
+          <button class="mode-btn" data-time="10">10秒</button>
+        </div>
+      </section>
+
+      <!-- ベスト記録表示 -->
+      <section class="best-section">
+        <span>👑 自己ベスト: </span>
+        <strong id="best-cps-display">0.00</strong>
+        <span class="unit">CPS</span>
+      </section>
+
+      <!-- リアルタイム情報バー -->
+      <section class="status-bar">
+        <div class="status-item">
+          <span class="status-label">残り時間</span>
+          <span id="time-display" class="status-value">5.00s</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">クリック数</span>
+          <span id="clicks-display" class="status-value">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">現在のCPS</span>
+          <span id="cps-display" class="status-value">0.00</span>
+        </div>
+      </section>
+
+      <!-- タイマーゲージ -->
+      <div class="timer-bar-bg">
+        <div id="timer-bar-fill" class="timer-bar-fill" style="width: 100%;"></div>
+      </div>
+
+      <!-- メインのクリックパッド -->
+      <section class="click-area-container">
+        <button id="click-pad" class="click-pad">
+          <div class="pad-content">
+            <span id="pad-icon" class="pad-icon">👆</span>
+            <span id="pad-main-text" class="pad-main-text">ここをクリックしてスタート！</span>
+            <span id="pad-sub-text" class="pad-sub-text">最初のクリックでタイマーが始まります</span>
+          </div>
+        </button>
+      </section>
+
+      <!-- 結果カード（終了時に表示） -->
+      <section id="result-card" class="result-card hidden">
+        <div class="result-badge" id="result-badge">測定完了！</div>
+        <div class="result-main">
+          <span class="result-cps-val" id="final-cps">0.00</span>
+          <span class="result-cps-unit">CPS (Clicks / Sec)</span>
+        </div>
+        <div class="result-details">
+          <p>総クリック数: <strong id="final-clicks">0</strong> 回</p>
+          <p>測定時間: <strong id="final-duration">5</strong> 秒</p>
+          <p class="rank-text">ランク称号: <strong id="rank-title" class="rank-title">⚡ イナズマ級</strong></p>
+        </div>
+        <button id="retry-btn" class="btn btn-primary">もう一度挑戦する 🔄</button>
+      </section>
+
+      <!-- リセットボタン -->
+      <section class="action-section">
+        <button id="reset-btn" class="btn-text">待機状態に戻す</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

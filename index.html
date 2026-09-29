@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gamified Web Apps - ゲーミフィケーション実用アプリ30本</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: #0d1117;
+      color: #f0f6fc;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .badge-top {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #d4af37;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #f1c40f, #e67e22, #e74c3c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: #8b949e;
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+    }
+    .portal-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #58a6ff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      background: #21262d;
+      border-color: #58a6ff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .app-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 14px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .app-card:hover {
+      transform: translateY(-4px);
+      border-color: #d4af37;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+    }
+    .card-badge {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.15);
+      color: #f1c40f;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #f0f6fc;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: #8b949e;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #8b949e;
+      border-top: 1px solid #21262d;
+      padding-top: 12px;
+    }
+    .card-tag {
+      color: #2ea043;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge-top">30 DAYS GAMIFIED WEB APPS</span>
+      <h1>Gamified Web Apps Collection</h1>
+      <p class="lead">日常の実用ツール × ゲーミフィケーション！ 触っていて楽しい30個のWebサービス</p>
+      
+      <div class="portal-nav">
+        <a href="First-games/index.html" class="nav-btn">🎮 制作済みゲーム30本コレクションへ →</a>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Day 01: Quest ToDo -->
+      <a href="01-quest-todo/index.html" class="app-card" style="border-color: #d4af37;">
+        <div>
+          <span class="card-badge">Day 01 [NEW]</span>
+          <h2 class="card-title">Quest ToDo</h2>
+          <p class="card-desc">冒険者ギルドのタスク管理！タスク完了でEXP＆ゴールド獲得、レベルアップ＆紙吹雪演出、LocalStorage保存。</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-tag">⚔️ タスク管理 × RPG</span>
+          <span>LocalStorage / Web Audio</span>
+        </div>
+      </a>
+    </main>
+  </div>
+</body>
+</html>

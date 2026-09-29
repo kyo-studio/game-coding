@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>21 倉庫番 (Sokoban)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container" id="game-container">
+    <!-- コンパクトヘッダー（1行） -->
+    <header class="game-header">
+      <a href="../index.html" class="back-link">← 一覧</a>
+      <h1 class="game-title">📦 倉庫番</h1>
+      <span class="game-badge">#21</span>
+    </header>
+
+    <main class="arcade-card">
+      <!-- HUD（ステージ・歩数・押し数・ベスト） -->
+      <section class="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">STAGE</span>
+          <div class="stage-selector-wrap">
+            <select id="stage-select" class="stage-select">
+              <option value="0">Stage 1</option>
+              <option value="1">Stage 2</option>
+              <option value="2">Stage 3</option>
+              <option value="3">Stage 4</option>
+              <option value="4">Stage 5</option>
+            </select>
+          </div>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">歩数 (Moves)</span>
+          <strong id="moves-display" class="hud-value">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">押し数 (Pushes)</span>
+          <strong id="pushes-display" class="hud-value push-val">0</strong>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">👑 ベスト歩数</span>
+          <strong id="best-moves-display" class="hud-value gold">-</strong>
+        </div>
+      </section>
+
+      <!-- 倉庫番 Canvas 盤面 (360x360) -->
+      <div class="board-center-box">
+        <div class="canvas-wrapper">
+          <canvas id="gameCanvas" width="360" height="360"></canvas>
+
+          <!-- ステージクリアオーバーレイ -->
+          <div id="clear-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">🎉📦✨</div>
+              <h2 class="clear-title">STAGE CLEARED!</h2>
+              <p class="overlay-desc">すべての荷物を目的地に格納しました！</p>
+              <div class="result-stats">
+                <p>総歩数: <strong id="clear-moves">0</strong> 歩</p>
+                <p>押し数: <strong id="clear-pushes">0</strong> 回</p>
+                <p id="new-record-badge" class="new-record-badge hidden">✨ NEW RECORD! ✨</p>
+              </div>
+              <div class="clear-actions">
+                <button id="retry-stage-btn" class="btn btn-secondary">もう一度 🔄</button>
+                <button id="next-stage-btn" class="btn btn-primary">次のステージ ⏩</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 全ステージ制覇オーバーレイ -->
+          <div id="all-clear-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon">🏆👑🎖️</div>
+              <h2 class="clear-title gold-text">ALL STAGES CLEARED!</h2>
+              <p class="overlay-desc">素晴らしい！全5ステージの倉庫番パズルを完全制覇しました！</p>
+              <button id="all-clear-restart-btn" class="btn btn-primary">最初から遊ぶ 🔄</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作パネル: アクションボタン（UNDO/RESET） & 仮想D-Pad -->
+      <div class="controls-container">
+        <!-- アクションボタン（UNDO / RESET） -->
+        <div class="action-btn-row">
+          <button id="undo-btn" class="btn action-btn undo-btn" title="一手戻す">
+            <span class="btn-icon">⏪</span> 一手戻す
+          </button>
+          <button id="reset-btn" class="btn action-btn reset-btn" title="初期配置に戻す">
+            <span class="btn-icon">🔄</span> リセット
+          </button>
+        </div>
+
+        <!-- 仮想D-Pad（スマホ十字キー） -->
+        <div class="dpad-box" id="dpad">
+          <button class="dpad-btn dpad-up" data-dir="up" aria-label="上へ移動">▲</button>
+          <div class="dpad-middle-row">
+            <button class="dpad-btn dpad-left" data-dir="left" aria-label="左へ移動">◀</button>
+            <div class="dpad-center"></div>
+            <button class="dpad-btn dpad-right" data-dir="right" aria-label="右へ移動">▶</button>
+          </div>
+          <button class="dpad-btn dpad-down" data-dir="down" aria-label="下へ移動">▼</button>
+        </div>
+      </div>
+
+      <!-- 操作ヒント -->
+      <footer class="game-footer">
+        <span>操作: <strong>十字キー / WASD / スワイプ / D-Pad</strong>（箱は引けません）</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>

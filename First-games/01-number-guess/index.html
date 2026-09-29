@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01 数当てゲーム (High & Low)</title>
+  <link rel="stylesheet" href="style.css?v=20260913_zoomfix">
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <span class="game-badge">Game #01</span>
+      <h1>数当てゲーム</h1>
+      <p class="subtitle">High & Low</p>
+    </header>
+
+    <main class="game-card">
+      <section class="rules-section">
+        <p>コンピュータが <strong>1 〜 100</strong> の数字を1つ決めました。</p>
+        <p>ヒントを頼りに、<strong>7回以内</strong> に当ててみましょう！</p>
+      </section>
+
+      <!-- 残り回数の表示 -->
+      <section class="status-section">
+        <div class="attempts-info">
+          <span>残り挑戦回数:</span>
+          <span id="remaining-attempts" class="attempts-count">7</span>
+          <span>回</span>
+        </div>
+        <div class="attempts-bar-bg">
+          <div id="attempts-bar" class="attempts-bar-fill" style="width: 100%;"></div>
+        </div>
+      </section>
+
+      <!-- 数字入力フォーム -->
+      <section class="input-section">
+        <div class="input-group">
+          <input 
+            type="number" 
+            id="guess-input" 
+            min="1" 
+            max="100" 
+            placeholder="1〜100の数字"
+            autocomplete="off"
+          >
+          <button id="guess-btn" class="btn btn-primary">予想する</button>
+        </div>
+        <!-- エラーメッセージ用 -->
+        <p id="error-message" class="error-message"></p>
+      </section>
+
+      <!-- ヒント・結果メッセージ表示エリア -->
+      <section id="result-section" class="result-section hidden">
+        <div id="result-box" class="result-box">
+          <span id="result-icon" class="result-icon">💡</span>
+          <p id="result-message" class="result-message">メッセージがここに表示されます</p>
+        </div>
+      </section>
+
+      <!-- 履歴表示エリア -->
+      <section class="history-section">
+        <h3>これまでの予想履歴</h3>
+        <div id="history-list" class="history-list">
+          <p class="empty-history">まだ予想していません</p>
+        </div>
+      </section>
+
+      <!-- リセット・再挑戦ボタン（ゲーム終了時に強調） -->
+      <section class="action-section">
+        <button id="reset-btn" class="btn btn-secondary">ゲームをやり直す</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js?v=20260913_zoomfix"></script>
+</body>
+</html>
